@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="script/play_zone.js"></script>
+    <script src="script/photo_player.js"></script>
+    <script src="script/video_player.js"></script>
+</head>
+<body>
+
+<div style="border: solid;">
+    <p>photo player</p>
+    <p id="photo_info">info</p>
+    <div id="photo_view" style="width: 320px; height: 180px; border: dotted;">
+    </div>
+    <input type="button" id="photo_start" value="start"/>
+    <input type="button" id="photo_stop" value="stop"/>
+    <input type="button" id="photo_clear" value="clear"/>
+    <input type="button" id="photo_on_next" value="next"/>
+    <input type="button" id="photo_on_prev" value="prev"/>
+    <input type="button" id="photo_on_ctrl" value="ctrl"/>
+    <script>
+        function photo_init() {
+            var info = document.getElementById("photo_info");
+            var pz = new MockPlayZone(info);
+            pz.create(null);
+            pz.run();
+
+            var config = new PlayerConfig("Photo", "http://www.w3schools.com/images/colorpicker.gif", null, 5);
+            var player = new PhotoPlayer(config, pz);
+            player.createView(document.getElementById("photo_view"));
+
+            document.getElementById("photo_start").onclick = function () {
+                player.start();
+            };
+
+            document.getElementById("photo_stop").onclick = function () {
+                player.stop();
+            };
+
+            document.getElementById("photo_clear").onclick = function () {
+                info.innerHTML = "...";
+            };
+
+            document.getElementById("photo_on_next").onclick = function () {
+                player.onNext();
+            };
+
+            document.getElementById("photo_on_prev").onclick = function () {
+                player.onPrevious();
+            };
+
+            document.getElementById("photo_on_ctrl").onclick = function () {
+                player.showControl();
+            };
+        }
+    </script>
+</div>
+
+<div style="border: solid;">
+    <p>video player</p>
+    <p id="video_info">info</p>
+    <div id="video_view" style="position: relative; width: 320px; height: 180px; border: dotted;">
+    </div>
+    <input type="button" id="video_start" value="start"/>
+    <input type="button" id="video_stop" value="stop"/>
+    <input type="button" id="video_clear" value="clear"/>
+    <input type="button" id="video_on_next" value="next"/>
+    <input type="button" id="video_on_prev" value="prev"/>
+    <input type="button" id="video_on_ctrl" value="ctrl"/>
+    <input type="button" id="video_on_meta" value="meta"/>
+    <script>
+        function video_init() {
+            var info = document.getElementById("video_info");
+            var pz = new MockPlayZone(info);
+            pz.create(null);
+            pz.run();
+
+            var config = new PlayerConfig("video", "http://www.w3schools.com/html/mov_bbb.mp4",
+                    "http://www.w3schools.com/images/colorpicker.gif", 15);
+            var player = new VideoPlayer(config, pz);
+            player.createView(document.getElementById("video_view"));
+
+            document.getElementById("video_start").onclick = function () {
+                player.start();
+            };
+
+            document.getElementById("video_stop").onclick = function () {
+                player.stop();
+            };
+
+            document.getElementById("video_clear").onclick = function () {
+                info.innerHTML = "...";
+            };
+
+            document.getElementById("video_on_next").onclick = function () {
+                player.onNext();
+            };
+
+            document.getElementById("video_on_prev").onclick = function () {
+                player.onPrevious();
+            };
+
+            document.getElementById("video_on_meta").onclick = function () {
+                var meta = player.showMeta();
+                setTimeout(function() {
+                    meta.style.visibility = "hidden";
+                }, 1500);
+            };
+
+            document.getElementById("video_on_ctrl").onclick = function () {
+                player.showControl();
+            };
+        }
+    </script>
+</div>
+
+</body>
+<script>
+    setTimeout(function() {
+        photo_init();
+        video_init();
+    }, 3000);
+</script>
+</html>
